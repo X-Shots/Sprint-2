@@ -12,7 +12,6 @@ def connect_to_db():
         host="localhost",           
         port="5432"                   
     )
-    return conn
 
 
 
@@ -62,13 +61,13 @@ def main():
     conn = connect_to_db()
     df = crash_per_country(conn)
     cpr = crash_per_year(conn)
-    conn.close
+    conn.close()
 
     chart = int(input('Which chart would you like to see? \n\t1 = crashes per country\n\t2 = crashes per year\n: '))
     if chart == 1:
         pie_crash_per_country(df)
     elif chart == 2:
-        crash_per_year(cpr)
+        line_crash_per_year(cpr)
     else:
         return
 
