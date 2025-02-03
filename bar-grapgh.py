@@ -19,24 +19,40 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
 
-counrties = """
-    SELECT crash_country, COUNT(*) as crash_count
-    FROM crash_table
-    GROUP BY crash_country
-    ORDER BY crash_count DESC
-    """
-crashes = """
-    SELECT crash_year, COUNT(*) as crash_count
-    FROM crash_table
-    GROUP BY crash_year
-    ORDER BY crash_year
-    """
+def connect_to_db():
+    return psycopg2.connect(
+        dbname="postgres",  
+        user="postgres",         
+        password="l9l9L(L(",     
+        host="localhost",           
+        port="5432"                   
+    )
 
-plt.bar(counrties, crashes)
-plt.title('Fruit Sales')
-plt.xlabel('Countries')
-plt.ylabel('Crashes')
-plt.show()
+def crashes_per_year(conn):
+    query = """
+        SELECT crash_country, COUNT(*) as crash_count
+        FROM crash_table
+        GROUP BY crash_country
+        ORDER BY crash_count DESC
+        """
+    bar = pd.read_sql_query(query,conn)
+    return bar
+
+
+def bargraph_crash_per_country():
+    plt.bar()
+    plt.title('Crashes')
+    plt.xlabel('Countries')
+    plt.ylabel('Crashes')
+    plt.show()
+
+def main()
+    conn = connect_to_db()
+    crashes = crashes_per_year(conn)
+    conn.close()
+
+    bragraph(bar)
+
 
 
 # Connect to the PostgreSQL database    
