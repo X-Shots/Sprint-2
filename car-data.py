@@ -1,7 +1,7 @@
 import psycopg2
 import pandas as pd
 import matplotlib.pyplot as plt
-print("please work")
+# print("please work")
 
 # Connect to the PostgreSQL database
 def connect_to_db():
