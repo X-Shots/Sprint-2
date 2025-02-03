@@ -14,7 +14,6 @@ def connect_to_db():
     )
 
 
-
  # Fetch year data from database
 def crash_per_year(conn):
     query = """
