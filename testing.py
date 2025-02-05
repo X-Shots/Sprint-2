@@ -61,6 +61,9 @@ def pie_chart(df, category):
     plt.axis('equal')  
     plt.show()  
 
+# Plot scatter plot
+def scatter_plot(df, category):
+    return None
 
 
 def main():
@@ -69,7 +72,7 @@ def main():
     #menu
     while True:
         category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
-        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie): ").strip().lower()
+        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
     
 
         crash_data = fetch_crash_data(conn, category)
@@ -80,6 +83,8 @@ def main():
             bar_graph(crash_data, category)
         elif type_of_graph == "pie":
             pie_chart(crash_data, category)
+        elif type_of_graph == "scatter":
+            scatter_plot(crash_data, category)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
             continue

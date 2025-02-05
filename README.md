@@ -6,7 +6,6 @@ A program that looks at car crash data and take that data and makes a bar, pie o
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
 - [Contact](#contact)
 
 
@@ -31,7 +30,21 @@ requires the following
 ## Installation
 1. install the required libraires
     - pip intall psycopg2 pandas matplot
-2. intsall p
+2. intsall postgresSQL
+
+## Usage
+1. python testing.py
+2. select category
+3. select graph type
+
+## Contact
+Developed by
+- Lily 
+- Lily
+- Hyrum
+- Tylar
+
+
 
 
 
