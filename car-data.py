@@ -97,7 +97,7 @@ def crash_per_country_per_year(conn):
 def scatter_crash_per_country_per_year(cpc):
     countries = cpc["crash_country"].unique()
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
 
     for country in countries:
         country_data = cpc[cpc["crash_country"] == country]
