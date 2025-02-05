@@ -66,24 +66,12 @@ def pie_chart(df, category):
 def main():
     conn = connect_to_db()
 
-    category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
-
-    crash_data = fetch_crash_data(conn, category)
-
-    if crash_data is not None:
-        line_graph(crash_data, category)
-    conn.close()
-
     #menu
     while True:
-        print("Do you want to analyze another category?")
-        choice = input("Enter 'yes' or 'no': ").strip().lower()
-        if choice != 'yes':
-            break
-
+        category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
         type_of_graph = input("What type of graph do you want to plot? (line, bar, pie): ").strip().lower()
+    
 
-        
         crash_data = fetch_crash_data(conn, category)
 
         if type_of_graph == "line":
@@ -94,7 +82,13 @@ def main():
             pie_chart(crash_data, category)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
+            continue
 
+        choice = input("Do you want to analyze another category? (yes/no): ").strip().lower()
+        if choice != "yes":
+            break
+
+    conn.close()
 
 
 if __name__ == '__main__':
