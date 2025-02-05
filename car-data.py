@@ -117,7 +117,7 @@ def main():
     cpc = crash_per_country_per_year(conn)
     conn.close()
 
-    chart = int(input('Which chart would you like to see? \n\t1 = crashes per country\n\t2 = crashes per year\n: '))
+    chart = int(input('Which chart would you like to see? \n\t1 = crashes per country\n\t2 = crashes per year\n3 = crashes per country\n4 = weather conditions\n5 = crashes per country per year'))
     if chart == 1:
         pie_crash_per_country(df)
     elif chart == 2:
