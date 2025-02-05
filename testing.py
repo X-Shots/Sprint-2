@@ -63,8 +63,14 @@ def main():
             break
         category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
         crash_data = fetch_crash_data(conn, category)
-        if crash_data is not None:
+        if crash_data is "line":
             line_graph(crash_data, category)
+        elif crash_data is "bar":
+            bar_graph(crash_data, category)
+        elif crash_data is "pie":
+            pie_chart(crash_data, category)
+        else:
+            print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
   
 
 if __name__ == '__main__':
