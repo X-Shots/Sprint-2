@@ -75,20 +75,25 @@ def main():
     #menu
     while True:
         print("Do you want to analyze another category?")
-        choice = input("Enter 'yes' or 'no': ")
-        if choice.lower() != 'yes':
+        choice = input("Enter 'yes' or 'no': ").strip().lower()
+        if choice != 'yes':
             break
-        type = input("What type of graph do you want to plot? (line, bar, pie): ")
+
+        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie): ").strip().lower()
+
+        
         crash_data = fetch_crash_data(conn, category)
-        if crash_data is "line":
-            line_graph(crash_data, category,type)
-        elif crash_data is "bar":
-            bar_graph(crash_data, category,type)
-        elif crash_data is "pie":
-            pie_chart(crash_data, category,type)
+
+        if type_of_graph == "line":
+            line_graph(crash_data, category)
+        elif type_of_graph == "bar":
+            bar_graph(crash_data, category)
+        elif type_of_graph == "pie":
+            pie_chart(crash_data, category)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-  
+
+
 
 if __name__ == '__main__':
 
