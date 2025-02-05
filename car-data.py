@@ -71,7 +71,7 @@ def weather_conditions(conn):
     query = """
     SELECT weather_conditions, count(*) as crash_count
     FROM crash_table
-    GROUP BY crash_country
+    GROUP BY weather_conditions
     ORDER BY crash_count DESC"""
     wc = pd.read_sql_query(query, conn)
     return wc
