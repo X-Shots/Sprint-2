@@ -56,10 +56,37 @@ def pie_crash_per_country(df):
     plt.axis('equal')  
     plt.show() 
 
+# plot bar graph
+def bargraph_crash_per_country(df):
+    plt.figure(figsize=(10, 6))
+    plt.bar(df['crash_country'], df['crash_count'], color='skyblue')
+    plt.title('Car Crashes by Country', fontsize=14)
+    plt.xlabel('Country', fontsize=12)
+    plt.ylabel('Number of Crashes', fontsize=12)
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better visibility
+    plt.tight_layout()  # Adjust layout to prevent clipping
+    plt.show()
+
+def weather_conditions(conn):
+    query = """Select weather_conditions, count(*) as crash_count
+    FROM crash_table
+    GROUP BY crash_country
+    ORDER BY crash_count DESC"""
+    wc = pd.read_sql_query(query, conn)
+    return wc
+
+def pie_weather_conditions(wc):
+    plt.figure(figsize=(8, 8))  
+    plt.pie(wc['crash_count'], labels=wc['weather_conditions'], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+    plt.title('Weather Conditions', fontsize=14)
+    plt.axis('equal')  
+    plt.show()
+
 def main():
     conn = connect_to_db()
     df = crash_per_country(conn)
     cpr = crash_per_year(conn)
+    wc = weather_conditions(conn)
     conn.close()
 
     chart = int(input('Which chart would you like to see? \n\t1 = crashes per country\n\t2 = crashes per year\n: '))
@@ -67,6 +94,10 @@ def main():
         pie_crash_per_country(df)
     elif chart == 2:
         line_crash_per_year(cpr)
+    elif chart == 3:
+        bargraph_crash_per_country(df)
+    elif chart == 4:
+        pie_weather_conditions(wc)
     else:
         return
 

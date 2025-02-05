@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    print("Choose what tpye of graph you would like to see")
+    print("Choose what type of graph you would like to see")
     print("1. Line graph")
     print("2. Bar graph")
     print("3. Pie chart")
