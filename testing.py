@@ -63,7 +63,29 @@ def pie_chart(df, category):
 
 # Plot scatter plot
 def scatter_plot(df, category):
-    return None
+    countries = cpc["crash_country"].unique()
+
+    plt.figure(figsize=(12, 6))
+
+    for country in countries:
+        country_data = cpc[cpc["crash_country"] == country]
+        plt.scatter(country_data["crash_year"], country_data["crash_count"], label=country)
+
+    plt.xlabel("Year")
+    plt.ylabel("Number of Crashes")
+    plt.title("Crashes Per Country Per Year")
+    plt.legend(title="Country", loc="upper left", bbox_to_anchor=(1, 1))  
+    plt.show()
+def crash_per_country_per_year(conn):
+    query = """
+    SELECT crash_year, crash_country, COUNT(*) as crash_count
+    FROM crash_table
+    GROUP BY crash_year, crash_country
+    ORDER BY crash_year, crash_country DESC
+    """
+    
+    cpc = pd.read_sql_query(query, conn)
+    return cpc
 
 
 def main():
