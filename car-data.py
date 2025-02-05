@@ -68,7 +68,8 @@ def bargraph_crash_per_country(df):
     plt.show()
 
 def weather_conditions(conn):
-    query = """Select weather_conditions, count(*) as crash_count
+    query = """
+    SELECT weather_conditions, count(*) as crash_count
     FROM crash_table
     GROUP BY crash_country
     ORDER BY crash_count DESC"""
