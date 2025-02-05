@@ -14,9 +14,10 @@ A program that looks at car crash data and take that data and makes a bar, pie o
 - Connects to PostgreSQL 
 - Fetches and groups data
 - Visualizes data by making graphs
-    - pie
-    - bar 
-    - line
+    - Pie Chart
+    - Bar Graph
+    - Line Graph
+    - Scatter Plot
 
 
 ## Requirements
