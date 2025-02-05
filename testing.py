@@ -12,54 +12,49 @@ def connect_to_db():
         port="5432"                   
     )
 
+# Function to fetch crash data by a given category (crash_year or crash_country)
+def fetch_crash_data(conn, category):
+    if category not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+        print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
+        return None
 
  # Fetch year data from database
-def crash_per_year(conn):
-    query = """
-    SELECT crash_year, COUNT(*) as crash_count
+    query = f"""
+    SELECT {category}, COUNT(*) as crash_count
     FROM crash_table
-    GROUP BY crash_year
-    ORDER BY crash_year
+    GROUP BY {category}
+    ORDER BY {category}
     """
+
+     # Using pandas to fetch data
+    df = pd.read_sql_query(query, conn)
+    return df
   
-    # using panda to fetch data
-    cpr = pd.read_sql_query(query, conn)
-    return cpr
+
+
 # Plot line graph
-def line_crash_per_year(cpr):
+def line_graph(df, category):
     plt.figure(figsize=(10, 6))
-    plt.plot(cpr['crash_year'], cpr['crash_count'], marker='o', linestyle='-', color='b')
-    plt.title('Car Crashes per Year', fontsize=14)
-    plt.xlabel('Year', fontsize=12)
+    plt.plot(df[category], df['crash_count'], marker='o', linestyle='-', color='b')
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
     plt.grid(True)
     plt.show()
     
-    # using panda to fetch data
-    df = pd.read_sql_query(query, conn) 
-    return df
 
-# Plot pie chart
-def pie_crash_per_country(df):
-    plt.figure(figsize=(8, 8))  
-    plt.pie(df['crash_count'], labels=df['crash_country'], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
-    plt.title('Car Crashes by Country', fontsize=14)
-    plt.axis('equal')  
-    plt.show() 
 
 def main():
     conn = connect_to_db()
-    df = crash_per_country(conn)
-    cpr = crash_per_year(conn)
-    conn.close()
 
-    chart = int(input('Which chart would you like to see? \n\t1 = crashes per country\n\t2 = crashes per year\n: '))
-    if chart == 1:
-        pie_crash_per_country(df)
-    elif chart == 2:
-        line_crash_per_year(cpr)
-    else:
-        return
+    category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
+
+    crash_data = fetch_crash_data(conn, category)
+
+    if crash_data is not None:
+        line_graph(crash_data, category)
+    conn.close()
+  
 
 if __name__ == '__main__':
 
