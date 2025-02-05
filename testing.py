@@ -54,6 +54,17 @@ def main():
     if crash_data is not None:
         line_graph(crash_data, category)
     conn.close()
+
+    #menu
+    while True:
+        print("Do you want to analyze another category?")
+        choice = input("Enter 'yes' or 'no': ")
+        if choice.lower() != 'yes':
+            break
+        category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
+        crash_data = fetch_crash_data(conn, category)
+        if crash_data is not None:
+            line_graph(crash_data, category)
   
 
 if __name__ == '__main__':
