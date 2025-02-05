@@ -41,7 +41,24 @@ def line_graph(df, category):
     plt.ylabel('Number of Crashes', fontsize=12)
     plt.grid(True)
     plt.show()
-    
+
+def bar_graph(df, category):
+    plt.figure(figsize=(10, 6))
+    plt.bar(df[category], df['crash_count'], color='skyblue')
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
+    plt.ylabel('Number of Crashes', fontsize=12)
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better visibility
+    plt.tight_layout()  # Adjust layout to prevent clipping
+    plt.show()
+
+def pie_chart(df, category):        
+    plt.figure(figsize=(8, 8))
+    plt.pie(df['crash_count'], labels=df[category], autopct='%1.1f%%', startangle=140)
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.show()  
+
 
 
 def main():
@@ -61,14 +78,14 @@ def main():
         choice = input("Enter 'yes' or 'no': ")
         if choice.lower() != 'yes':
             break
-        category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
+        type = input("What type of graph do you want to plot? (line, bar, pie): ")
         crash_data = fetch_crash_data(conn, category)
         if crash_data is "line":
-            line_graph(crash_data, category)
+            line_graph(crash_data, category,type)
         elif crash_data is "bar":
-            bar_graph(crash_data, category)
+            bar_graph(crash_data, category,type)
         elif crash_data is "pie":
-            pie_chart(crash_data, category)
+            pie_chart(crash_data, category,type)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
   
