@@ -1,4 +1,4 @@
-# Car Crach Data
+# Car Crash Data
 A program that looks at car crash data and take that data and makes a bar, pie or line grapgh
 
 ## Table of Contents
