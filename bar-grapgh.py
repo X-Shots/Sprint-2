@@ -46,7 +46,7 @@ def bargraph_crash_per_country():
     plt.ylabel('Crashes')
     plt.show()
 
-def main()
+def main():
     conn = connect_to_db()
     crashes = crashes_per_year(conn)
     conn.close()
