@@ -61,12 +61,12 @@ def pie_chart(df, category):
     plt.show()  
 
 def scatter_plot(df, category):
-    countries = cpc["crash_country"].unique()
+    countries = df["crash_country"].unique()
 
     plt.figure(figsize=(12, 6))
 
     for country in countries:
-        country_data = cpc[cpc["crash_country"] == country]
+        country_data = df[df["crash_country"] == country]
         plt.scatter(country_data["crash_year"], country_data["crash_count"], label=country)
 
     plt.xlabel("Year")
