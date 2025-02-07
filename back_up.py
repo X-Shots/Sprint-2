@@ -57,8 +57,8 @@ def bar_graph(df, category):
     plt.ylabel('Number of Crashes', fontsize=12)
     
     # Adjust the y-axis limits to be dynamic
-    y_min = df['crash_count'].min() * 0.9  # Set lower limit to 90% of min value
-    y_max = df['crash_count'].max() * 1.1  # Set upper limit to 110% of max value
+    y_min = df['crash_count'].min() * 0.9# Set lower limit to 90% of min value
+    y_max = df['crash_count'].max() * 1.01 # Set upper limit to 110% of max value
     plt.ylim(y_min, y_max)
     
     # Adjust x-axis ticks
@@ -81,11 +81,29 @@ def pie_chart(df, category):
 
 
 def scatter_plot(df, category):
+    # Create a scatter plot
     plt.figure(figsize=(12, 6))
-    plt.scatter(df[category], df['crash_count'])
+    
+    # Ensure category is treated as a string if it is categorical
+    if df[category].dtype == 'object' or df[category].dtype.name == 'category':
+        x = df[category].astype(str)
+    else:
+        x = df[category]
+    
+    # Plot the scatter plot
+    plt.scatter(x, df['crash_count'], color='skyblue', alpha=0.7)
+    
+    # Add labels and title
     plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    
+    # Rotate x-axis labels if dealing with a categorical variable
+    if df[category].dtype == 'object' or df[category].dtype.name == 'category':
+        plt.xticks(rotation=45, ha='right')
+    
+    # Display the plot
+    plt.tight_layout()
     plt.show()
 
    
