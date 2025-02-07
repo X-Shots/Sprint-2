@@ -49,7 +49,11 @@ def bar_graph(df, category):
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
-    plt.xticks(rotation=45, ha='right') 
+    plt.xticks(rotation=45, ha='right')
+    
+    # Manually adjust the Y-axis to avoid starting from 0
+    plt.ylim(bottom=min(df['crash_count']), top=max(df['crash_count']) * 1.1)  # Adjust top to make it visually appealing
+    
     plt.tight_layout()  
     plt.show()
 
@@ -102,8 +106,8 @@ def main():
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
 
-        
-        print("Do you want to analyze another category?")
+        # Determines if user wants to view 
+        print("\nDo you want to analyze another category?")
         choice = input("Enter 'yes' or 'no': ")
         if choice.lower() =='yes':
             True
@@ -112,10 +116,7 @@ def main():
     
         
         
-        
-
     
-  
 
 if __name__ == '__main__':
 
