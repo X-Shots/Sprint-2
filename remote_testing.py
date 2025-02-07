@@ -43,8 +43,6 @@ def line_graph(df, category):
     plt.show()
     
 
-<<<<<<< HEAD
-=======
 # Plot pie chart
 def pie_chart(df, category):        
     plt.figure(figsize=(8, 8))
@@ -61,7 +59,6 @@ def scatter_plot(df, category):
     plt.ylabel('Number of Crashes', fontsize=12)
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.show()
->>>>>>> 400b18c29fb5865ba7cdde2b2f45acedb17afee3
 
    
 
@@ -75,7 +72,6 @@ def main():
         choice = input("Enter 'yes' or 'no': ")
         if choice.lower() != 'yes':
             break
-<<<<<<< HEAD
         category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
         crash_data = fetch_crash_data(conn, category)
         if crash_data is "line":
@@ -86,7 +82,6 @@ def main():
             pie_chart(crash_data, category)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-=======
         else:   
             category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
         
@@ -148,7 +143,6 @@ def main():
         
 
     conn.close()
->>>>>>> 400b18c29fb5865ba7cdde2b2f45acedb17afee3
   
 
 if __name__ == '__main__':
