@@ -48,10 +48,8 @@ def pie_chart(df, category):
     plt.pie(df['crash_count'], labels=df[category], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.axis('equal')  
-<<<<<<< HEAD
     plt.show() 
     
-=======
     plt.show()  
 
 # Plot scatter plot
@@ -79,7 +77,6 @@ def crash_per_country_per_year(conn):
     
     cpc = pd.read_sql_query(query, conn)
     return cpc
->>>>>>> 32aaf0872602f52d0b6420cc3ee17b680b6e52d7
 
 
 def main():
