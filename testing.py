@@ -14,9 +14,10 @@ def connect_to_db():
 
 # Function to fetch crash data by a given category (crash_year or crash_country)
 def fetch_crash_data(conn, category):
-    if category not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+    if category not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
+
 
  # Fetch year data from database
     query = f"""
@@ -41,84 +42,81 @@ def line_graph(df, category):
     plt.ylabel('Number of Crashes', fontsize=12)
     plt.grid(True)
     plt.show()
+    
+def bar_graph(df, category):
+    plt.figure(figsize=(10, 6))
+    plt.bar(df[category], df['crash_count'], color='skyblue')
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
+    plt.ylabel('Number of Crashes', fontsize=12)
+    plt.xticks(rotation=45, ha='right') 
+    plt.tight_layout()  
+    plt.show()
 
 # Plot pie chart
-def pie_chart(df, category):
-    plt.figure(figsize=(8, 8))  
-    plt.pie(df['crash_count'], labels=df[category], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+def pie_chart(df, category):        
+    plt.figure(figsize=(8, 8))
+    plt.pie(df['crash_count'], labels=df[category], autopct='%1.1f%%', startangle=140)
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.axis('equal')  
-    plt.show() 
-    
     plt.show()  
 
-# Plot scatter plot
+
 def scatter_plot(df, category):
-    countries = cpc["crash_country"].unique()
-
     plt.figure(figsize=(12, 6))
-
-    for country in countries:
-        country_data = cpc[cpc["crash_country"] == country]
-        plt.scatter(country_data["crash_year"], country_data["crash_count"], label=country)
-
-    plt.xlabel("Year")
-    plt.ylabel("Number of Crashes")
-    plt.title("Crashes Per Country Per Year")
-    plt.legend(title="Country", loc="upper left", bbox_to_anchor=(1, 1))  
+    plt.scatter(df[category], df['crash_count'])
+    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
+    plt.ylabel('Number of Crashes', fontsize=12)
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.show()
-def crash_per_country_per_year(conn):
-    query = """
-    SELECT crash_year, crash_country, COUNT(*) as crash_count
-    FROM crash_table
-    GROUP BY crash_year, crash_country
-    ORDER BY crash_year, crash_country DESC
-    """
-    
-    cpc = pd.read_sql_query(query, conn)
-    return cpc
 
+   
 
 def main():
     conn = connect_to_db()
 
-    # category = input("\nWhich data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
-
-
-    # if crash_data is not None:
-    #     line_graph(crash_data, category)
-    # conn.close()
-
     #menu
     while True:
-
+       
         
-
-
-        # Determines which data the user wants to analyze 
-        category = input("\nWhich data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
-        # crash_data = fetch_crash_data(conn, category)
-        # Determines which graph type the user wants 
-        crash_type = input("\nWhat type of graph?\n\tline\n\tbar\n\tpie\nType answer here: ")
-
-        ########################################
-        # Not sure what this line does
-        ########################################
+        type_of_graph = input("\nWhat type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
+        category = input("\nWhich data do you want to analyze:\n"
+                 "crash_country\ncrash_year\ncrash_month\nweek_day\n"
+                 "crash_time\ncrash_setting\nroad_type\nweather_condition\n"
+                 "vision_level\ncars_involved\nspeed_limit\ndriver_age\n"
+                 "driver_gender\nalcohol_level\ndriver_fatigue\ncar_condition\n"
+                 "pedestrians_involved\ncyclists_involved\ncrash_severity\n"
+                 "injury_amount\nfatality_amount\nemergency_response_time\n"
+                 "traffic_volume\nroad_condition\ncrash_cause\ninsurance_claim\n"
+                 "medical_cost\neconomic_loss\ncrash_region\npopulation_density\n"
+                 "Type Category here: ").strip().lower()
         crash_data = fetch_crash_data(conn, category)
-        if crash_type == "line":
+        if type_of_graph == "line":
             line_graph(crash_data, category)
-        # elif crash_type is "bar":
-        #     bar_graph(crash_data, category)
-        elif crash_type == "pie":
+        elif type_of_graph == "bar":
+            bar_graph(crash_data, category)
+        elif type_of_graph == "pie":
             pie_chart(crash_data, category)
+        elif type_of_graph == "scatter":
+            scatter_plot(crash_data, category)
         else:
             print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-  
-        # Determines if user wants to view more graphs
+
+        
         print("Do you want to analyze another category?")
         choice = input("Enter 'yes' or 'no': ")
-        if choice.lower() != 'yes':
+        if choice.lower() =='yes':
+            True
+        else:
             break
+    
+        
+        
+        
+
+    
+  
+
 if __name__ == '__main__':
 
     main()
