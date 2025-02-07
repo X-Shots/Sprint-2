@@ -42,6 +42,15 @@ def line_graph(df, category):
     plt.grid(True)
     plt.show()
     
+def bar_graph(df, category):
+    plt.figure(figsize=(10, 6))
+    plt.bar(df[category], df['crash_count'], color='skyblue')
+    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
+    plt.ylabel('Number of Crashes', fontsize=12)
+    plt.xticks(rotation=45, ha='right') 
+    plt.tight_layout()  
+    plt.show()
 
 # Plot pie chart
 def pie_chart(df, category):        
@@ -72,74 +81,23 @@ def main():
         choice = input("Enter 'yes' or 'no': ")
         if choice.lower() != 'yes':
             break
-        category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
-        crash_data = fetch_crash_data(conn, category)
-        if crash_data is "line":
-            line_graph(crash_data, category)
-        elif crash_data is "bar":
-            bar_graph(crash_data, category)
-        elif crash_data is "pie":
-            pie_chart(crash_data, category)
-        else:
-            print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
         else:   
-            category = input("Which data do you want to analyze:\ncrash_year\ncrash_country\nweather_condition\ncrash_setting\nType Category here: ")
-        
-            type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ")
+            type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
+            category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
             crash_data = fetch_crash_data(conn, category)
-            if category is "crash_year":
-                if type_of_graph == "line":
-                    line_graph(crash_data, category)
-                elif type_of_graph == "bar":
-                    bar_graph(crash_data, category)
-                elif type_of_graph == "pie":
-                    pie_chart(crash_data, category)
-                elif type_of_graph == "scatter":
-                    scatter_plot(crash_data, category)
-                else:
-                    print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-                    
 
-            elif category is "crash_country":
-                if type_of_graph == "line":
-                    line_graph(crash_data, category)
-                elif type_of_graph == "bar":
-                    bar_graph(crash_data, category)
-                elif type_of_graph == "pie":
-                    pie_chart(crash_data, category)
-                elif type_of_graph == "scatter":
-                    scatter_plot(crash_data, category)
-                else:
-                    print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-                    
-
-            elif category is "weather_condition":
-                if type_of_graph == "line":
-                    line_graph(crash_data, category)
-                elif type_of_graph == "bar":
-                    bar_graph(crash_data, category)
-                elif type_of_graph == "pie":
-                    pie_chart(crash_data, category)
-                elif type_of_graph == "scatter":
-                    scatter_plot(crash_data, category)
-                else:
-                    print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-                    
-
-            elif category is "crash_setting":
-                if type_of_graph == "line":
-                    line_graph(crash_data, category)
-                elif type_of_graph == "bar":
-                    bar_graph(crash_data, category)
-                elif type_of_graph == "pie":
-                    pie_chart(crash_data, category)
-                elif type_of_graph == "scatter":                
-                    scatter_plot(crash_data, category)   
-                else:
-                    print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
-
+            if type_of_graph == "line":
+                line_graph(crash_data, category)
+            elif type_of_graph == "bar":
+                bar_graph(crash_data, category)
+            elif type_of_graph == "pie":
+                pie_chart(crash_data, category)
+            elif type_of_graph == "scatter":
+                scatter_plot(crash_data, category)
             else:
-                print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
+                print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
+        
+        
         
 
     conn.close()
