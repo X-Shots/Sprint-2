@@ -67,19 +67,19 @@ def bargraph_crash_per_country(df):
     plt.tight_layout()  # Adjust layout to prevent clipping
     plt.show()
 
-def weather_conditions(conn):
+def weather_condition(conn):
     query = """
-    SELECT weather_conditions, count(*) as crash_count
+    SELECT weather_condition, count(*) as crash_count
     FROM crash_table
-    GROUP BY weather_conditions
+    GROUP BY weather_condition
     ORDER BY crash_count DESC"""
     wc = pd.read_sql_query(query, conn)
     return wc
 
-def pie_weather_conditions(wc):
+def pie_weather_condition(wc):
     plt.figure(figsize=(8, 8))  
-    plt.pie(wc['crash_count'], labels=wc['weather_conditions'], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
-    plt.title('Weather Conditions', fontsize=14)
+    plt.pie(wc['crash_count'], labels=wc['weather_condition'], autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+    plt.title('Weather Condition', fontsize=14)
     plt.axis('equal')  
     plt.show()
 
@@ -165,7 +165,7 @@ def main():
     conn = connect_to_db()
     df = crash_per_country(conn)
     cpr = crash_per_year(conn)
-    wc = weather_conditions(conn)
+    wc = weather_condition(conn)
     cpc = crash_per_country_per_year(conn)
     wpy = crash_per_weather_per_year(conn)
     wpc = crash_per_weather_per_country(conn)
@@ -179,7 +179,7 @@ def main():
     elif chart == 3:
         bargraph_crash_per_country(df)
     elif chart == 4:
-        pie_weather_conditions(wc)
+        pie_weather_condition(wc)
     elif chart == 5:
         scatter_crash_per_country_per_year(cpc)
     elif chart == 6:
