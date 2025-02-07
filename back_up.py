@@ -77,30 +77,33 @@ def main():
 
     #menu
     while True:
+       
+        
+        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
+        category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
+        crash_data = fetch_crash_data(conn, category)
+        if type_of_graph == "line":
+            line_graph(crash_data, category)
+        elif type_of_graph == "bar":
+            bar_graph(crash_data, category)
+        elif type_of_graph == "pie":
+            pie_chart(crash_data, category)
+        elif type_of_graph == "scatter":
+            scatter_plot(crash_data, category)
+        else:
+            print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
         print("Do you want to analyze another category?")
         choice = input("Enter 'yes' or 'no': ")
-        if choice.lower() != 'yes':
+        if choice.lower() =='yes':
+            True
+        else:
             break
-        else:   
-            type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
-            category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
-            crash_data = fetch_crash_data(conn, category)
-
-            if type_of_graph == "line":
-                line_graph(crash_data, category)
-            elif type_of_graph == "bar":
-                bar_graph(crash_data, category)
-            elif type_of_graph == "pie":
-                pie_chart(crash_data, category)
-            elif type_of_graph == "scatter":
-                scatter_plot(crash_data, category)
-            else:
-                print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
+    
         
         
         
 
-    conn.close()
+    
   
 
 if __name__ == '__main__':
