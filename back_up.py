@@ -43,15 +43,33 @@ def line_graph(df, category):
     plt.grid(True)
     plt.show()
     
+import matplotlib.pyplot as plt
+
 def bar_graph(df, category):
     plt.figure(figsize=(10, 6))
+    
+    # Create the bar chart
     plt.bar(df[category], df['crash_count'], color='skyblue')
+    
+    # Set the title and labels
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
-    plt.xticks(rotation=45, ha='right') 
-    plt.tight_layout()  
+    
+    # Adjust the y-axis limits to be dynamic
+    y_min = df['crash_count'].min() * 0.9  # Set lower limit to 90% of min value
+    y_max = df['crash_count'].max() * 1.1  # Set upper limit to 110% of max value
+    plt.ylim(y_min, y_max)
+    
+    # Adjust x-axis ticks
+    plt.xticks(rotation=45, ha='right')
+    
+    # Tight layout for better spacing
+    plt.tight_layout()
+    
+    # Display the plot
     plt.show()
+
 
 # Plot pie chart
 def pie_chart(df, category):        
