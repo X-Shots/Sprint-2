@@ -118,7 +118,7 @@ def main():
                 scatter_plot(crash_data, category_1, category_2)
             
             else: 
-                category = input("Enter the category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
+                category = input("Enter the category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)\n").strip().lower()
                 crash_data = fetch_crash_data(conn, category)
 
                 if type_of_graph == "line":
