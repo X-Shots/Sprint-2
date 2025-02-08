@@ -29,8 +29,27 @@ def fetch_crash_data(conn, category):
      # Using pandas to fetch data
     df = pd.read_sql_query(query, conn)
     return df
-  
 
+# Function to fetch crash data by two given categories
+def fetch_crash_data_double(conn, category_1, category_2):
+    if category_1 not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+        print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
+        return None
+    if category_2 not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+        print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
+        return None
+    
+    # Fetch data from database
+    query = f"""
+    SELECT {category_1}, {category_2}, COUNT(*) as crash_count
+    FROM crash_table
+    GROUP BY {category_1}, {category_2}
+    ORDER BY {category_1}, {category_2} DESC
+    """
+
+    # Using pandas to fetch data
+    df = pd.read_sql_query(query, conn)
+    return df
 
 # Plot line graph
 def line_graph(df, category):
@@ -61,12 +80,19 @@ def pie_chart(df, category):
     plt.show()  
 
 
-def scatter_plot(df, category):
+def scatter_plot(df, category_1, category_2):
+    dots = df[f"{category_1}"].unique()
+
     plt.figure(figsize=(12, 6))
-    plt.scatter(df[category], df['crash_count'])
-    plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
+
+    for dot in dots:
+        dot_data = df[df[f"{category_1}"] == dot]
+        plt.scatter(dot_data[f"{category_2}"], dot_data["crash_count"], label=dot)
+
+    plt.xlabel(category_2.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
-    plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
+    plt.title(f'Car Crashes per {category_1.replace("_", " ").title()} per {category_2.replace("_", " ").title()}', fontsize=14)
+    plt.legend(title=category_1.replace("_", " ").title(), loc="upper left", bbox_to_anchor=(1, 1))  
     plt.show()
 
    
@@ -83,19 +109,27 @@ def main():
             break
         else:   
             type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
-            category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
-            crash_data = fetch_crash_data(conn, category)
 
-            if type_of_graph == "line":
-                line_graph(crash_data, category)
-            elif type_of_graph == "bar":
-                bar_graph(crash_data, category)
-            elif type_of_graph == "pie":
-                pie_chart(crash_data, category)
-            elif type_of_graph == "scatter":
-                scatter_plot(crash_data, category)
-            else:
-                print("Invalid choice. Please choose 'line', 'bar', or 'pie'.")
+            if type_of_graph == "scatter":
+                category_1 = input("Enter the first category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
+                category_2 = input("Enter the second category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
+                
+                crash_data = fetch_crash_data_double(conn, category_1, category_2)
+
+                scatter_plot(crash_data, category_1, category_2)
+            
+            else: 
+                category = input("Enter a category to analyze (crash_year, crash_country, weather_condition, crash_setting): ").strip().lower()
+                crash_data = fetch_crash_data_double(conn, category_1, category_2)
+
+                if type_of_graph == "line":
+                    line_graph(crash_data, category)
+                elif type_of_graph == "bar":
+                    bar_graph(crash_data, category)
+                elif type_of_graph == "pie":
+                    pie_chart(crash_data, category)
+                else:
+                    print("Invalid choice. Please choose 'line', 'bar', 'pie', or 'scatter'.")
         
         
         
