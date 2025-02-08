@@ -68,9 +68,14 @@ def bar_graph(df, category):
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
-    plt.xticks(rotation=45, ha='right') 
+    plt.xticks(rotation=45, ha='right')
+    
+    # Manually adjust the Y-axis to avoid starting from 0
+    plt.ylim(bottom=min(df['crash_count']), top=max(df['crash_count']) * 1.1)  # Adjust top to make it visually appealing
+    
     plt.tight_layout()  
     plt.show()
+
 
 # Plot pie chart
 def pie_chart(df, category):        
@@ -102,33 +107,36 @@ def main():
 
     #menu
     while True:
-        print("Do you want to analyze another category?")
-        choice = input("Enter 'yes' or 'no': ")
-        if choice.lower() != 'yes':
-            break
-        else:   
-            type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
+        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
 
-            if type_of_graph == "scatter":
-                category_1 = input("Enter the first category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
-                category_2 = input("Enter the second category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
+        if type_of_graph == "scatter":
+            category_1 = input("Enter the first category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
+            category_2 = input("Enter the second category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
                 
-                crash_data = fetch_crash_data_double(conn, category_1, category_2)
+            crash_data = fetch_crash_data_double(conn, category_1, category_2)
 
-                scatter_plot(crash_data, category_1, category_2)
+            scatter_plot(crash_data, category_1, category_2)
             
-            else: 
-                category = input("Enter the category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)\n").strip().lower()
-                crash_data = fetch_crash_data(conn, category)
+        else: 
+            category = input("Enter the category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)\n").strip().lower()
+            crash_data = fetch_crash_data(conn, category)
 
-                if type_of_graph == "line":
-                    line_graph(crash_data, category)
-                elif type_of_graph == "bar":
-                    bar_graph(crash_data, category)
-                elif type_of_graph == "pie":
-                    pie_chart(crash_data, category)
-                else:
-                    print("Invalid choice. Please choose 'line', 'bar', 'pie', or 'scatter'.")
+            if type_of_graph == "line":
+                line_graph(crash_data, category)
+            elif type_of_graph == "bar":
+                bar_graph(crash_data, category)
+            elif type_of_graph == "pie":
+                pie_chart(crash_data, category)
+            else:
+                print("Invalid choice. Please choose 'line', 'bar', 'pie', or 'scatter'.")
+
+        # Determines if user wants to view 
+        print("\nDo you want to analyze another category?")
+        choice = input("Enter 'yes' or 'no': ")
+        if choice.lower() =='yes':
+            True
+        else:
+            break
         
     conn.close()
   
