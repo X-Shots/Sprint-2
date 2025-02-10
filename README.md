@@ -40,8 +40,8 @@ requires the following
 
 ## Contact
 Developed by
-- Lily 
-- Lily
+- Lily brown
+- Lily Sorensen
 - Hyrum
 - Tylar
 

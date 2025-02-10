@@ -120,11 +120,11 @@ def main():
                  "crash_country\ncrash_year\ncrash_month\nweek_day\n"
                  "crash_time\ncrash_setting\nroad_type\nweather_condition\n"
                  "vision_level\ncars_involved\nspeed_limit\ndriver_age\n"
-                 "driver_gender\nalcohol_level\ndriver_fatigue\ncar_condition\n"
+                 "driver_gender\ndriver_fatigue\ncar_condition\n"
                  "pedestrians_involved\ncyclists_involved\ncrash_severity\n"
                  "injury_amount\nfatality_amount\nemergency_response_time\n"
                  "traffic_volume\nroad_condition\ncrash_cause\ninsurance_claim\n"
-                 "medical_cost\neconomic_loss\ncrash_region\npopulation_density\n"
+                 "crash_region\npopulation_density\n"
                  "Type Category here: ").strip().lower()
         crash_data = fetch_crash_data(conn, category)
         if type_of_graph == "line":
