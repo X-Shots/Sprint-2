@@ -15,7 +15,7 @@ def connect_to_db():
 
 # Function to fetch crash data by a given category (crash_year or crash_country)
 def fetch_crash_data(conn, category):
-    if category not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
+    if category not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
 
@@ -33,10 +33,10 @@ def fetch_crash_data(conn, category):
 
 # Function to fetch crash data by two given categories
 def fetch_crash_data_double(conn, category_1, category_2):
-    if category_1 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
+    if category_1 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
-    if category_2 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
+    if category_2 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
     
@@ -62,18 +62,30 @@ def line_graph(df, category):
     plt.grid(True)
     plt.show()
     
+# Plot bar graph
 def bar_graph(df, category):
     plt.figure(figsize=(10, 6))
+    
+    # Create the bar chart
     plt.bar(df[category], df['crash_count'], color='skyblue')
+    
+    # Set the title and labels
     plt.title(f'Car Crashes per {category.replace("_", " ").title()}', fontsize=14)
     plt.xlabel(category.replace('_', ' ').title(), fontsize=12)
     plt.ylabel('Number of Crashes', fontsize=12)
+    
+    # Adjust the y-axis limits to be dynamic
+    y_min = df['crash_count'].min() * 0.9# Set lower limit to 90% of min value
+    y_max = df['crash_count'].max() * 1.01 # Set upper limit to 110% of max value
+    plt.ylim(y_min, y_max)
+    
+    # Adjust x-axis ticks
     plt.xticks(rotation=45, ha='right')
     
-    # Manually adjust the Y-axis to avoid starting from 0
-    plt.ylim(bottom=min(df['crash_count']), top=max(df['crash_count']) * 1.1)  # Adjust top to make it visually appealing
+    # Tight layout for better spacing
+    plt.tight_layout()
     
-    plt.tight_layout()  
+    # Display the plot
     plt.show()
 
 
