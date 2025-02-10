@@ -15,7 +15,7 @@ def connect_to_db():
 
 # Function to fetch crash data by a given category (crash_year or crash_country)
 def fetch_crash_data(conn, category):
-    if category not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+    if category not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
 
@@ -33,10 +33,10 @@ def fetch_crash_data(conn, category):
 
 # Function to fetch crash data by two given categories
 def fetch_crash_data_double(conn, category_1, category_2):
-    if category_1 not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+    if category_1 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
-    if category_2 not in ['crash_year', 'crash_country', 'weather_condition', 'crash_setting']:
+    if category_2 not in ['crash_country','crash_year','crash_month','week_day','crash_time','crash_setting','road_type','weather_condition','vision_level','cars_involved','speed_limit','driver_age','driver_gender','alcohol_level','driver_fatigue','car_condition','pedestrians_involved','cyclists_involved','crash_severity','injury_amount','fatality_amount','emergency_responce_time','traffic_volume','road_condition','crash_cause','insurance_claim','medical_cost','economic_loss','crash_region','population_density']:
         print("Invalid category. Please choose one of the options. Make sure to spell correctly.")
         return None
     
@@ -107,18 +107,45 @@ def main():
 
     #menu
     while True:
-        type_of_graph = input("What type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
+        type_of_graph = input("\nWhat type of graph do you want to plot? (line, bar, pie, scatter): ").strip().lower()
 
         if type_of_graph == "scatter":
-            category_1 = input("Enter the first category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
-            category_2 = input("Enter the second category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)").strip().lower()
+            category_1 = input("\nEnter the first category to analyze:\n"
+                 "crash_country\ncrash_year\ncrash_month\nweek_day\n"
+                 "crash_time\ncrash_setting\nroad_type\nweather_condition\n"
+                 "cars_involved\nspeed_limit\ndriver_age\n"
+                 "driver_gender\ndriver_fatigue\ncar_condition\n"
+                 "pedestrians_involved\ncyclists_involved\ncrash_severity\n"
+                 "injury_amount\nfatality_amount\nemergency_response_time\n"
+                 "traffic_volume\nroad_condition\ncrash_cause\ninsurance_claim\n"
+                 "medical_cost\neconomic_loss\ncrash_region\npopulation_density\n"
+                 "\nType Category here: ").strip().lower()
+            category_2 = input("\nEnter the second category to analyze:\n"
+                 "crash_country\ncrash_year\ncrash_month\nweek_day\n"
+                 "crash_time\ncrash_setting\nroad_type\nweather_condition\n"
+                 "cars_involved\nspeed_limit\ndriver_age\n"
+                 "driver_gender\ndriver_fatigue\ncar_condition\n"
+                 "pedestrians_involved\ncyclists_involved\ncrash_severity\n"
+                 "injury_amount\nfatality_amount\nemergency_response_time\n"
+                 "traffic_volume\nroad_condition\ncrash_cause\ninsurance_claim\n"
+                 "medical_cost\neconomic_loss\ncrash_region\npopulation_density\n"
+                 "\nType Category here: ").strip().lower()
                 
             crash_data = fetch_crash_data_double(conn, category_1, category_2)
 
             scatter_plot(crash_data, category_1, category_2)
             
         else: 
-            category = input("Enter the category to analyze:\n(crash_country, crash_year, crash_month, week_day, crash_time, crash_setting, road_type, weather_condition, vision_level, cars_involved, speed_limit, driver_age, driver_gender, alcohol_level, driver_fatigue, car_condition, pedestrians_involved, cyclists_involved, crash_severity, injury_amount, fatality_amount, emergency_response_time, traffic_volume, road_condition, crash_cause, insurance_claim, medical_cost, economic_loss, crash_region, population_density)\n").strip().lower()
+            category = input("\nWhich data do you want to analyze:\n"
+                 "crash_country\ncrash_year\ncrash_month\nweek_day\n"
+                 "crash_time\ncrash_setting\nroad_type\nweather_condition\n"
+                 "cars_involved\nspeed_limit\ndriver_age\n"
+                 "driver_gender\ndriver_fatigue\ncar_condition\n"
+                 "pedestrians_involved\ncyclists_involved\ncrash_severity\n"
+                 "injury_amount\nfatality_amount\nemergency_response_time\n"
+                 "traffic_volume\nroad_condition\ncrash_cause\ninsurance_claim\n"
+                 "medical_cost\neconomic_loss\ncrash_region\npopulation_density\n"
+                 "\nType Category here: ").strip().lower()
             crash_data = fetch_crash_data(conn, category)
 
             if type_of_graph == "line":
